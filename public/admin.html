@@ -2,112 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Panel – Delete Article</title>
+  <title>Admin Delete</title>
   <style>
-    body {
-      font-family: 'Georgia', serif;
-      background-color: #fdf6e3;
-      padding: 40px;
-      color: #333;
-    }
-
-    h1 {
-      color: darkred;
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-size: 18px;
-      margin-top: 10px;
-      display: block;
-    }
-
-    input {
-      padding: 10px;
-      width: 100%;
-      max-width: 500px;
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: darkred;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: crimson;
-    }
-
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
-    .success {
-      color: green;
-    }
-
-    .error {
-      color: red;
-    }
-
-    .note {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #666;
-    }
+    body { font-family: sans-serif; padding: 40px; background: #fefefe; }
+    input, button { padding: 10px; margin-top: 10px; font-size: 16px; width: 300px; }
+    .success { color: green; }
+    .error { color: red; }
   </style>
 </head>
 <body>
-  <h1>🛠 Admin Panel</h1>
-  <label for="articleId">Enter Article ID to Delete:</label>
-  <input type="text" id="articleId" placeholder="e.g. 665e14c7f289aab4d1251c85" />
-
-  <button onclick="deleteArticle()">Delete Article</button>
+  <h2>Admin – Delete Article</h2>
+  <input id="articleId" placeholder="Enter Article ID" />
+  <button onclick="deleteArticle()">Delete</button>
   <p id="message"></p>
-
-  <p class="note">Note: This action is permanent and also removes associated comments.</p>
 
   <script>
     async function deleteArticle() {
       const id = document.getElementById('articleId').value.trim();
-      const message = document.getElementById('message');
-      message.textContent = '';
-      message.className = '';
+      const msg = document.getElementById('message');
 
       if (!id || id.length !== 24) {
-        message.textContent = '⚠️ Please enter a valid 24-character Article ID.';
-        message.className = 'error';
+        msg.textContent = '❌ Invalid MongoDB ID.';
+        msg.className = 'error';
         return;
       }
 
-      const confirmDelete = confirm(`Are you sure you want to delete the article with ID:\n${id}?`);
-      if (!confirmDelete) return;
+      if (!confirm(`Delete article ${id}?`)) return;
 
       try {
-        const res = await fetch(`https://inyserver-2.onrender.com/${id}`, {
-          method: 'DELETE'
-        });
-
+        const res = await fetch(`http://localhost:5000/articles/${id}`, { method: 'DELETE' });
         const data = await res.json();
-
         if (res.ok) {
-          message.textContent = `✅ ${data.message || 'Article deleted successfully.'}`;
-          message.className = 'success';
+          msg.textContent = '✅ ' + data.message;
+          msg.className = 'success';
         } else {
-          message.textContent = `❌ ${data.message || 'Failed to delete article.'}`;
-          message.className = 'error';
+          msg.textContent = '❌ ' + (data.message || 'Delete failed');
+          msg.className = 'error';
         }
       } catch (err) {
-        console.error('Error deleting article:', err);
-        message.textContent = '❌ Server error. Check console for details.';
-        message.className = 'error';
+        console.error(err);
+        msg.textContent = '❌ Server error';
+        msg.className = 'error';
       }
     }
   </script>
