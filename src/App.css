@@ -1,61 +1,97 @@
 body {
   font-family: 'Georgia', serif;
-  background-color: #fdfcf8;
+  background-color: #fdf6e3;
   color: #111;
   margin: 0;
   padding: 0;
+  background-image: repeating-linear-gradient(0deg, #fdf6e3 0px, #fdf6e3 1px, #f7f1d3 2px);
+  min-height: 100vh;
 }
 
 .container {
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
   margin: auto;
-  padding: 20px;
+  padding: 40px;
+  background-color: #fffdf4;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-left: 2px solid #ccc;
+  border-right: 2px solid #ccc;
 }
 
 header {
   text-align: center;
-  border-bottom: 3px double black;
-  padding-bottom: 10px;
+  border-bottom: 5px double #000;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 4em;
   margin-bottom: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .tagline {
   font-style: italic;
-  color: #555;
+  color: #333;
+  font-size: 1.2em;
+  margin-top: 5px;
 }
 
 .article-card {
-  border-bottom: 1px solid #ccc;
-  padding: 15px 0;
+  border-bottom: 1px solid #999;
+  padding: 20px 0;
+}
+
+.article-card:last-child {
+  border-bottom: none;
 }
 
 .meta {
   font-size: 0.9em;
-  color: #555;
+  color: #666;
   font-style: italic;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.comment-form input, .comment-form textarea, .new-article-form input, .new-article-form textarea {
+.comment-form input,
+.comment-form textarea,
+.new-article-form input,
+.new-article-form textarea {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  font-family: serif;
-  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-family: 'Georgia', serif;
+  font-size: 1em;
+  border: 1px solid #aaa;
+  background-color: #fdfaf3;
 }
 
 button {
-  padding: 8px 12px;
-  background-color: black;
-  color: white;
+  padding: 10px 16px;
+  background-color: #111;
+  color: #fdf6e3;
   border: none;
-  font-family: serif;
+  font-family: 'Georgia', serif;
+  font-size: 1em;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #444;
+  background-color: #333;
+}
+
+/* Optional: Make headings look vintage */
+
+h2, h3 {
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px;
+  margin-top: 30px;
 }
