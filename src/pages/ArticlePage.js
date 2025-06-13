@@ -9,7 +9,7 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
-    axios.get(`https://inyserver-2.onrender.com/${id}`).then((res) => {
+    axios.get(`https://inyserver-2.onrender.com/$/{id}`).then((res) => {
       setArticle(res.data.article);
       setComments(res.data.comments);
     });
