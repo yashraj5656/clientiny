@@ -1,7 +1,7 @@
 body {
   font-family: 'Georgia', serif;
   background-color: #fdf6e3;
-  color: #111;
+  color: #3E3E3E;
   margin: 0;
   padding: 0;
   background-image: repeating-linear-gradient(0deg, #fdf6e3 0px, #fdf6e3 1px, #f7f1d3 2px);
@@ -13,7 +13,7 @@ body {
   max-width: 1200px;
   margin: auto;
   padding: 40px;
-  background-color: #fffdf4;
+  background-color: #f5f5dc;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-left: 2px solid #ccc;
   border-right: 2px solid #ccc;

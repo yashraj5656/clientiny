@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="container">
         <header>
-          <h1>The iNY Times</h1>
+          <h1>The Yashraj Journal</h1>
           <p className="tagline">Truth • Tradition • Timeless</p>
           <Link to="/new">
             <button style={{ marginTop: '20px' }}>Post Your Story</button>
