@@ -1,13 +1,21 @@
+/* Base */
 body {
   font-family: 'Georgia', serif;
   background-color: #fdf6e3;
   color: #3E3E3E;
   margin: 0;
   padding: 0;
-  background-image: repeating-linear-gradient(0deg, #fdf6e3 0px, #fdf6e3 1px, #f7f1d3 2px);
+  background-image: repeating-linear-gradient(
+    0deg,
+    #fdf6e3 0px,
+    #fdf6e3 1px,
+    #f7f1d3 2px
+  );
   min-height: 100vh;
+  line-height: 1.7;
 }
 
+/* Layout container */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -17,8 +25,10 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-left: 2px solid #ccc;
   border-right: 2px solid #ccc;
+  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* subtle texture */
 }
 
+/* Header */
 header {
   text-align: center;
   border-bottom: 5px double #000;
@@ -30,63 +40,72 @@ h1 {
   font-size: 4em;
   font-family: 'Georgia', serif;
   margin-bottom: 0;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 }
 
 .tagline {
   font-style: italic;
-  color: #333;
-  font-size: 1.2em;
-  margin-top: 5px;
+  color: #555;
+  font-size: 1.25em;
+  margin-top: 8px;
+  letter-spacing: 1px;
 }
 
+/* Article Cards */
 .article-card {
   border-bottom: 1px solid #999;
-  padding: 20px 0;
+  padding: 25px 0;
+  transition: background-color 0.3s ease;
 }
 
-.article-card:last-child {
-  border-bottom: none;
+.article-card:hover {
+  background-color: #f0ead6;
 }
 
 .meta {
-  font-size: 0.9em;
+  font-size: 0.95em;
   color: #666;
   font-style: italic;
   margin-bottom: 10px;
   display: block;
 }
 
+/* Forms */
 .comment-form input,
 .comment-form textarea,
 .new-article-form input,
 .new-article-form textarea {
   width: 100%;
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 12px;
   font-family: 'Georgia', serif;
   font-size: 1em;
   border: 1px solid #aaa;
-  background-color: #fdfaf3;
+  background-color: #fffdf4;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
 }
 
+/* Button */
 button {
-  padding: 10px 16px;
+  padding: 12px 20px;
   background-color: #111;
   color: #fdf6e3;
-  border: none;
+  border: 2px solid #111;
   font-family: 'Georgia', serif;
   font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 button:hover {
-  background-color: #333;
+  background-color: transparent;
+  color: #111;
 }
 
-/* Optional: Make headings look vintage */
-
+/* Headings */
 h2, h3 {
   font-family: 'Georgia', serif;
   font-weight: bold;
@@ -94,4 +113,6 @@ h2, h3 {
   border-bottom: 1px dashed #ccc;
   padding-bottom: 5px;
   margin-top: 30px;
+  letter-spacing: 1px;
+  font-variant: small-caps;
 }
