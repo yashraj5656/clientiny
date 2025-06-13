@@ -9,16 +9,24 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
+    // Fetch the article
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
-      .then((res) => setArticle(res.data))
+      .then((res) => {
+        // If your backend sends { article, comments }, use this:
+        const data = res.data.article ? res.data.article : res.data;
+        setArticle(data);
+      })
       .catch((err) => console.error('Error fetching article:', err));
 
+    // Fetch the comments
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
-      .then((res) => setComments(res.data))
+      .then((res) => {
+        console.log("Fetched comments:", res.data);
+        setComments(res.data);
+      })
       .catch((err) => console.error('Error fetching comments:', err));
   }, [id]);
 
-  // ✅ Insert your updated function here
   const submitComment = async (e) => {
     e.preventDefault();
 
@@ -35,7 +43,7 @@ function ArticlePage() {
 
       setForm({ name: '', text: '' });
 
-      // 👇 Update local comments array immediately
+      // Append the new comment locally
       setComments([...comments, res.data]);
     } catch (err) {
       console.error('Error posting comment:', err);
@@ -44,37 +52,47 @@ function ArticlePage() {
   };
 
   return article ? (
-    <div>
+    <div style={{ background: '#fdfde7', padding: '1rem' }}>
       <h2>{article.title}</h2>
-      <p className="meta">
-        By {article.author} • {new Date(article.date).toDateString()}
+      <p className="meta" style={{ fontStyle: 'italic', color: '#555' }}>
+        By {article.author || 'Unknown'} • {article.date ? new Date(article.date).toDateString() : 'Unknown Date'}
       </p>
       <p>{article.content}</p>
 
       <hr />
-      <h3>Comments</h3>
-      {comments.length > 0 ? comments.map((c) => (
-        <div key={c._id} className="comment">
-          <p><strong>{c.name}</strong>: {c.text}</p>
-        </div>
-      )) : <p>No comments yet.</p>}
+      <h3 style={{ marginTop: '2rem' }}>Comments</h3>
+      {comments.length > 0 ? (
+        comments.map((c) => (
+          <div key={c._id} className="comment" style={{ borderTop: '1px solid #ddd', padding: '10px 0' }}>
+            <p><strong>{c.name}</strong>: {c.text}</p>
+          </div>
+        ))
+      ) : (
+        <p>No comments yet.</p>
+      )}
 
-      <form onSubmit={submitComment} className="comment-form">
+      <form onSubmit={submitComment} className="comment-form" style={{ marginTop: '1rem' }}>
         <input
           type="text"
           placeholder="Your Name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
+          style={{ width: '100%', padding: '8px', marginBottom: '0.5rem' }}
         />
         <textarea
           placeholder="Comment"
           value={form.text}
           onChange={(e) => setForm({ ...form, text: e.target.value })}
+          style={{ width: '100%', padding: '8px', marginBottom: '0.5rem' }}
         ></textarea>
-        <button type="submit">Post Comment</button>
+        <button type="submit" style={{ padding: '8px 16px', background: '#000', color: '#fff', border: 'none' }}>
+          Post Comment
+        </button>
       </form>
     </div>
-  ) : <p>Loading...</p>;
+  ) : (
+    <p>Loading...</p>
+  );
 }
 
 export default ArticlePage;
