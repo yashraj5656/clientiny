@@ -9,23 +9,31 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
-    axios.get(`https://inyserver-2.onrender.com/$/{id}`).then((res) => {
-      setArticle(res.data.article);
-      setComments(res.data.comments);
-    });
+    axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
+      .then((res) => {
+        setArticle(res.data.article);
+        setComments(res.data.comments);
+      })
+      .catch((err) => console.error('Error fetching article:', err));
   }, [id]);
+  
 
   const submitComment = async (e) => {
     e.preventDefault();
-    await axios.post('https://inyserver-2.onrender.com/comments', {
-      articleId: id,
-      ...form,
-    });
-    setForm({ name: '', text: '' });
-    const res = await axios.get(`https://inyserver-2.onrender.com/articles/${id}`);
-    setComments(res.data.comments);
+    try {
+      await axios.post('https://inyserver-2.onrender.com/comments', {
+        articleId: id,
+        ...form,
+      });
+      setForm({ name: '', text: '' });
+  
+      const res = await axios.get(`https://inyserver-2.onrender.com/articles/${id}`);
+      setComments(res.data.comments);
+    } catch (err) {
+      console.error('Error posting comment:', err);
+    }
   };
-
+  
   return article ? (
     <div>
       <h2>{article.title}</h2>
