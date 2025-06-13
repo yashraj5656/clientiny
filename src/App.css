@@ -2,7 +2,7 @@
 body {
   font-family: 'Georgia', serif;
   background-color: #fdf6e3;
-  color: #3E3E3E;
+  color:#000;
   margin: 0;
   padding: 0;
   background-image: repeating-linear-gradient(
@@ -24,8 +24,7 @@ body {
   background-color: #f5f5dc;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-left: 2px solid #ccc;
-  border-right: 2px solid #ccc;
-  background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* subtle texture */
+  border-right: 2px solid #ccc; /* subtle texture */
 }
 
 /* Header */
