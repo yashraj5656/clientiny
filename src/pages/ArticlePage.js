@@ -9,35 +9,37 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
-    // Fetch article data
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
       .then((res) => setArticle(res.data))
       .catch((err) => console.error('Error fetching article:', err));
 
-    // Fetch comments for that article
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
       .then((res) => setComments(res.data))
       .catch((err) => console.error('Error fetching comments:', err));
   }, [id]);
 
+  // ✅ Insert your updated function here
   const submitComment = async (e) => {
     e.preventDefault();
 
-    if (!form.name.trim() || !form.text.trim()) return;
+    if (!form.name.trim() || !form.text.trim()) {
+      alert("Name and comment are required.");
+      return;
+    }
 
     try {
-      await axios.post('https://inyserver-2.onrender.com/comments', {
+      const res = await axios.post('https://inyserver-2.onrender.com/comments', {
         articleId: id,
         ...form,
       });
 
       setForm({ name: '', text: '' });
 
-      // Re-fetch comments only (not the whole article)
-      const res = await axios.get(`https://inyserver-2.onrender.com/comments/${id}`);
-      setComments(res.data);
+      // 👇 Update local comments array immediately
+      setComments([...comments, res.data]);
     } catch (err) {
       console.error('Error posting comment:', err);
+      alert("Failed to post comment.");
     }
   };
 
