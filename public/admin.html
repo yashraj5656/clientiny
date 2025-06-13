@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel – Delete Article</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #f5f5dc;
+      padding: 30px;
+    }
+    h1 {
+      color: darkred;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>🛠 Admin Panel: Delete Article</h1>
+  <label for="articleId">Enter Article ID to Delete:</label><br />
+  <input type="text" id="articleId" placeholder="e.g. 6648fc2ad6b2ea..."><br />
+  <button onclick="deleteArticle()">Delete Article</button>
+  <p id="message"></p>
+
+  <script>
+    async function deleteArticle() {
+      const id = document.getElementById('articleId').value;
+      const message = document.getElementById('message');
+      if (!id) return alert('Please enter an article ID.');
+
+      const confirmDelete = confirm(`Are you sure you want to delete article ID: ${id}?`);
+      if (!confirmDelete) return;
+
+      try {
+        const res = await fetch(`https://inyserver-2.onrender.com/articles/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          message.textContent = '✅ Article deleted successfully.';
+          message.className = 'success';
+        } else {
+          message.textContent = '❌ Failed to delete article.';
+          message.className = 'error';
+        }
+      } catch (err) {
+        console.error(err);
+        message.textContent = '⚠️ Error occurred during deletion.';
+        message.className = 'error';
+      }
+    }
+  </script>
+</body>
+</html>
