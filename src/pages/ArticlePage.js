@@ -12,13 +12,13 @@ function ArticlePage() {
     console.log("📦 ID received from URL:", id);
   
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
-      .then((res) => setArticle(res.data.article)) // ✅ FIXED HERE
-      .catch((err) => console.error('Error fetching article:', err));
-  
-    axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
-      .then((res) => setComments(res.data))
-      .catch((err) => console.error('Error fetching comments:', err));
+      .then((res) => {
+        setArticle(res.data.article);      // ✅ fix: correctly access the article
+        setComments(res.data.comments);    // ✅ fix: correctly access the comments
+      })
+      .catch((err) => console.error('Error fetching article & comments:', err));
   }, [id]);
+  
   
   // ✅ Insert your updated function here
   const submitComment = async (e) => {
@@ -34,15 +34,16 @@ function ArticlePage() {
         articleId: id,
         ...form,
       });
-
+    
       setForm({ name: '', text: '' });
-
-      // 👇 Update local comments array immediately
-      setComments([...comments, res.data]);
+    
+      // Show new comment at the top (matches server sort)
+      setComments([res.data, ...comments]);
     } catch (err) {
       console.error('Error posting comment:', err);
       alert("Failed to post comment.");
     }
+    
   };
 
   return article ? (
