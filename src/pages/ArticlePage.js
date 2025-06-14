@@ -9,10 +9,10 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
-    console.log("📦 ID received from URL:", id); // ✅ Debug print
+    console.log("📦 ID received from URL:", id);
   
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
-      .then((res) => setArticle(res.data))
+      .then((res) => setArticle(res.data.article)) // ✅ FIXED HERE
       .catch((err) => console.error('Error fetching article:', err));
   
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
