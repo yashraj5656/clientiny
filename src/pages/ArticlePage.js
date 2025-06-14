@@ -10,13 +10,14 @@ function ArticlePage() {
 
   useEffect(() => {
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
-      .then((res) => setArticle(res.data))
+      .then((res) => setArticle(res.data)) // ← make sure it's not .data.article
       .catch((err) => console.error('Error fetching article:', err));
-
+  
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
       .then((res) => setComments(res.data))
       .catch((err) => console.error('Error fetching comments:', err));
   }, [id]);
+  
 
   const submitComment = async (e) => {
     e.preventDefault();
