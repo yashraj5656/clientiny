@@ -12,7 +12,6 @@ function ArticlePage() {
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
       .then((res) => setArticle(res.data))
       .catch((err) => console.error('Error fetching article:', err));
-      console.log("📦 ID received from URL:", id);
 
 
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
