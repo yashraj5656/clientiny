@@ -31,7 +31,7 @@ function Home() {
             style={{
               borderBottom: '1px solid #ccc',
               marginBottom: '30px',
-              paddingBottom: '20px'
+              paddingBottom: '10px'
             }}
           >
             <h2 style={{ marginBottom: '5px' }}>{article.title}</h2>
