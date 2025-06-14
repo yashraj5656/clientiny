@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './Home.css'; // 📁 Create this file
 
 function Home() {
   const [articles, setArticles] = useState([]);
@@ -13,12 +12,12 @@ function Home() {
   }, []);
 
   return (
-    <div className="home-container">
+    <div>
       {articles.map((article) => (
-        <div key={article._id} className="article-card">
-          <h3>{article.title}</h3>
-          <p className="meta">By {article.author} • {new Date(article.date).toDateString()}</p>
-          <p className="preview">{article.content.slice(0, 200)}...</p>
+        <div key={article._id} style={{ borderBottom: '1px solid #ccc', marginBottom: '20px' }}>
+          <h2>{article.title}</h2>
+          <p><strong>By {article.author}</strong> • {new Date(article.date).toDateString()}</p>
+          <p>{article.content.slice(0, 200)}...</p>
           <Link to={`/article/${article._id}`}>
             <button>Read More</button>
           </Link>
