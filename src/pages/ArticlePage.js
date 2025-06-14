@@ -9,16 +9,17 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
+    console.log("📦 ID received from URL:", id); // ✅ Debug print
+  
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
       .then((res) => setArticle(res.data))
       .catch((err) => console.error('Error fetching article:', err));
-
-
+  
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
       .then((res) => setComments(res.data))
       .catch((err) => console.error('Error fetching comments:', err));
   }, [id]);
-
+  
   // ✅ Insert your updated function here
   const submitComment = async (e) => {
     e.preventDefault();
