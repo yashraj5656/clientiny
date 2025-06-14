@@ -9,26 +9,19 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
-    if (!id) return;
-
-    // Fetch article
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
-      .then((res) => {
-        console.log("✅ Article fetched:", res.data);
-        setArticle(res.data);
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching article:", err);
-      });
+      .then((res) => setArticle(res.data))
+      .catch((err) => console.error('Error fetching article:', err));
 
-    // Fetch comments
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
       .then((res) => setComments(res.data))
-      .catch((err) => console.error("❌ Error fetching comments:", err));
+      .catch((err) => console.error('Error fetching comments:', err));
   }, [id]);
 
+  // ✅ Insert your updated function here
   const submitComment = async (e) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.text.trim()) {
       alert("Name and comment are required.");
       return;
@@ -39,21 +32,22 @@ function ArticlePage() {
         articleId: id,
         ...form,
       });
+
       setForm({ name: '', text: '' });
-      setComments([res.data, ...comments]); // newest on top
+
+      // 👇 Update local comments array immediately
+      setComments([...comments, res.data]);
     } catch (err) {
       console.error('Error posting comment:', err);
       alert("Failed to post comment.");
     }
   };
 
-  if (!article) return <p>Loading article...</p>;
-
-  return (
+  return article ? (
     <div>
       <h2>{article.title}</h2>
       <p className="meta">
-        By {article.author} • {new Date(article.date).toLocaleDateString()}
+        By {article.author} • {new Date(article.date).toDateString()}
       </p>
       <p>{article.content}</p>
 
@@ -76,11 +70,11 @@ function ArticlePage() {
           placeholder="Comment"
           value={form.text}
           onChange={(e) => setForm({ ...form, text: e.target.value })}
-        />
+        ></textarea>
         <button type="submit">Post Comment</button>
       </form>
     </div>
-  );
+  ) : <p>Loading...</p>;
 }
 
 export default ArticlePage;
