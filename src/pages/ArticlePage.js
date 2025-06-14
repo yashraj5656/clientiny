@@ -9,26 +9,25 @@ function ArticlePage() {
   const [form, setForm] = useState({ name: '', text: '' });
 
   useEffect(() => {
+    console.log("🔍 Article ID from URL:", id);
+
     axios.get(`https://inyserver-2.onrender.com/articles/${id}`)
       .then((res) => {
-        console.log("Article response:", res.data);
+        console.log("✅ Article fetched:", res.data);
         setArticle(res.data);
       })
-      .catch((err) => console.error('Error fetching article:', err));
-  
+      .catch((err) => console.error('❌ Error fetching article:', err));
+
     axios.get(`https://inyserver-2.onrender.com/comments/${id}`)
       .then((res) => {
-        console.log("Comments response:", res.data);
+        console.log("💬 Comments fetched:", res.data);
         setComments(res.data);
       })
-      .catch((err) => console.error('Error fetching comments:', err));
+      .catch((err) => console.error('❌ Error fetching comments:', err));
   }, [id]);
-  
-  
 
   const submitComment = async (e) => {
     e.preventDefault();
-
     if (!form.name.trim() || !form.text.trim()) {
       alert("Name and comment are required.");
       return;
@@ -39,13 +38,10 @@ function ArticlePage() {
         articleId: id,
         ...form,
       });
-
       setForm({ name: '', text: '' });
-
-      // Safe append (avoids stale state)
-      setComments(prev => [res.data, ...prev]); // newest first
+      setComments(prev => [res.data, ...prev]); // prepend new comment
     } catch (err) {
-      console.error('Error posting comment:', err);
+      console.error('❌ Error posting comment:', err);
       alert("Failed to post comment.");
     }
   };
@@ -91,7 +87,7 @@ function ArticlePage() {
       </form>
     </div>
   ) : (
-    <p>Loading...</p>
+    <p>Loading article...</p>
   );
 }
 
